@@ -1,0 +1,15 @@
+{
+  "name": "desafio-final-daniel-diaz",
+  "version": "1.0.0",
+  "description": "Pushing IT - Desafio Final EDD",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx cypress open --e2e -b electron"
+  },
+  "author": "Daniel Díaz",
+  "license": "ISC",
+  "dependencies": {
+    "cypress": "^10.8.0",
+    "xpath": "^0.0.32"
+  }
+}
