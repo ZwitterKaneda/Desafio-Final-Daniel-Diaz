@@ -1,0 +1,10 @@
+{
+    "FirstProduct": {
+        "name": "Black T-Shirt",
+        "price": 15
+    },
+    "SecondProduct": {
+        "name": "White Pants",
+        "price": 20
+    }
+}
