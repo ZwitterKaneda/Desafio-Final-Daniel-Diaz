@@ -55,7 +55,7 @@ it('Test', () => {
   loginpage.typePassword(password);
   loginpage.clickloginbutton();
   homepage.clickOnlineShop();  //Go to Online Shop
-    // Searching, adding, checking
+  // Searching, adding, checking
   productspage.addProductToCart(productsdata.FirstProduct.name);
   cy.get('#closeModal').click();
   productspage.addProductToCart(productsdata.SecondProduct.name);
