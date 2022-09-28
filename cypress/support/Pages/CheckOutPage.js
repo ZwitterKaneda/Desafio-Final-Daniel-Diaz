@@ -2,9 +2,7 @@
 export class CheckOutPage{
 
     goToCheckOutPage(){
-        cy.get('#onlineshoplink').should('exist').click();
-
-        cy.get('//*[@id="root"]/div/div[2]/div[3]/div/button').click();
+        cy.contains('Go to Checkout').should('be.exist').click();
     }
 
     typeFirstName(FirstName){

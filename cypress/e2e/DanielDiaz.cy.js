@@ -1,7 +1,6 @@
 /// <reference types="cypress" />
-require('cypress-xpath');
-
 //describe - before - it - after
+require('cypress-xpath');
 
 import { HomePage } from "../support/Pages/HomePage"
 import { LoginPage } from "../support/Pages/LoginPage"
@@ -9,7 +8,7 @@ import { RegisterPage } from "../support/Pages/RegisterPage"
 import { ProductsPage } from "../support/Pages/ProductsPage"
 import { ShoppingCartPage } from "../support/Pages/ShoppingCartPage";
 import { CheckOutPage } from "../support/Pages/CheckOutPage";
-
+import { TicketPage } from "../support/Pages/TicketPage"
 
 describe('Final Challenge', () => {
 
@@ -19,7 +18,8 @@ describe('Final Challenge', () => {
   const productspage = new ProductsPage();
   const shoppingcartpage = new ShoppingCartPage();
   const checkoutpage = new CheckOutPage();
-  
+  const ticketpage = new TicketPage();
+
 
   let productsdata, creditcarddata;
   let username = 'kaneharu';
@@ -31,8 +31,8 @@ describe('Final Challenge', () => {
 
   before('login', () => {
     
-    cy.fixture('ProductsData').then(Pdata => {productsdata = Pdata});    
-    cy.fixture('CreditCardData').then(CCdata => {creditcarddata = CCdata});    
+      cy.fixture('ProductsData').then(Pdata => {productsdata = Pdata});    
+      cy.fixture('CreditCardData').then(CCdata => {creditcarddata = CCdata});    
 
       cy.request({
       url: "https://pushing-it-backend.herokuapp.com/api/register",
@@ -49,41 +49,38 @@ describe('Final Challenge', () => {
   });
 
 it('Test', () => {
-  //Web site
-  cy.visit('');
+  cy.visit('');   //Web site
   registerpage.DobleClick();
-  //login
-  loginpage.typeUser(username);
+  loginpage.typeUser(username);   //login
   loginpage.typePassword(password);
   loginpage.clickloginbutton();
-  //Go to Online Shop
-  homepage.clickOnlineShop();
-  // Searching, adding, checking
+  homepage.clickOnlineShop();  //Go to Online Shop
+    // Searching, adding, checking
   productspage.addProductToCart(productsdata.FirstProduct.name);
   cy.get('#closeModal').click();
   productspage.addProductToCart(productsdata.SecondProduct.name);
   cy.get('#closeModal').click();
-    productspage.goShoppingCart();
-    shoppingcartpage.CheckProducts(productsdata.FirstProduct.name);
-    shoppingcartpage.CheckProducts(productsdata.SecondProduct.name);
-    shoppingcartpage.CheckPriceProducts(productsdata.FirstProduct.price, productsdata.FirstProduct.name);
-    shoppingcartpage.CheckPriceProducts(productsdata.SecondProduct.price, productsdata.SecondProduct.name);
-    shoppingcartpage.CheckFinalPrice(productsdata.FirstProduct.price, productsdata.SecondProduct.price);
+  productspage.goShoppingCart();
+  shoppingcartpage.CheckProducts(productsdata.FirstProduct.name);
+  shoppingcartpage.CheckProducts(productsdata.SecondProduct.name);
+  shoppingcartpage.CheckPriceProducts(productsdata.FirstProduct.price, productsdata.FirstProduct.name);
+  shoppingcartpage.CheckPriceProducts(productsdata.SecondProduct.price, productsdata.SecondProduct.name);
+  shoppingcartpage.CheckFinalPrice(productsdata.FirstProduct.price, productsdata.SecondProduct.price);
   //Paying
-// checkoutpage.goShoppingCart();
-cy.contains('Go to Checkout').should('be.exist').click();
-checkoutpage.typeFirstName(creditcarddata.CreditCard.FirstName);
-checkoutpage.typeLastName(creditcarddata.CreditCard.LastName);
-checkoutpage.typeCardNumber(creditcarddata.CreditCard.CardNumber);
-cy.contains('Purchase').should('be.exist').click();
-cy.wait(15000);
-cy.contains('Thank you').should('be.exist');
-
-
-
-
-    
+  checkoutpage.goToCheckOutPage();
+  checkoutpage.typeFirstName(creditcarddata.CreditCard.FirstName);
+  checkoutpage.typeLastName(creditcarddata.CreditCard.LastName);
+  checkoutpage.typeCardNumber(creditcarddata.CreditCard.CardNumber);
+  cy.contains('Purchase').should('be.exist').click();
+  //Ticket Verification
+  ticketpage.TicketTimeOut();
+  ticketpage.CCardVerification1(creditcarddata.CreditCard.FirstName, creditcarddata.CreditCard.LastName);
+  ticketpage.ProductsVerification(productsdata.FirstProduct.name);
+  ticketpage.ProductsVerification(productsdata.SecondProduct.name);
+  ticketpage.CCardVerification2(creditcarddata.CreditCard.CardNumber);
+  ticketpage.FinalPriceVerification(productsdata.FirstProduct.price, productsdata.SecondProduct.price);
 })
+
 
 after('Delete New User', () => {
   cy.request({
