@@ -1,5 +1,5 @@
 /// <reference types="cypress" />
-//describe - before - it - after
+
 require('cypress-xpath');
 
 import { HomePage } from "../support/Pages/HomePage"
@@ -22,8 +22,8 @@ describe('Final Challenge', () => {
 
 
   let productsdata, creditcarddata;
-  let username = 'kaneharu';
-  let password = '123456!';
+  let userName = 'kaneharu';
+  let passWord = '123456!';
   let gender = 'Male';
   let day = '08';
   let month = 'May';
@@ -38,22 +38,26 @@ describe('Final Challenge', () => {
       url: "https://pushing-it-backend.herokuapp.com/api/register",
       method: "POST",
       body: {
-        username: username,
-        password: password,
+        username: userName,
+        password: passWord,
         gender: gender,
         day: day,
         month: month,
         year: year,
       }
     });
+    cy.request({
+      method: "POST",
+      url: "https://pushing-it-backend.herokuapp.com/api/login",
+      body: {"username": "kaneharu", "password": "123456!"}
+    }).then(({ body }) =>{
+        window.localStorage.setItem("token", body.token)
+        window.localStorage.setItem("user", body.user.username)
+      });
   });
 
 it('Test', () => {
   cy.visit('');   //Web site
-  registerpage.DobleClick();
-  loginpage.typeUser(username);   //login
-  loginpage.typePassword(password);
-  loginpage.clickloginbutton();
   homepage.clickOnlineShop();  //Go to Online Shop
   // Searching, adding, checking
   productspage.addProductToCart(productsdata.FirstProduct.name);
@@ -84,7 +88,7 @@ it('Test', () => {
 
 after('Delete New User', () => {
   cy.request({
-    url: 'https://pushing-it-backend.herokuapp.com/api/deleteuser/' + username,
+    url: 'https://pushing-it-backend.herokuapp.com/api/deleteuser/' + userName,
     method: 'DELETE'
   }).then((response) => {
     expect(response.status).equal(200);
