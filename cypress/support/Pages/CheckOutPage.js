@@ -18,4 +18,7 @@ export class CheckOutPage{
         cy.xpath('//*[@id="root"]/div/div[2]/div[2]/form/div/div[4]/button[1]').click();    
     };
     
+    goToPurchase(){
+        cy.contains('Purchase').click();
+    }
     }

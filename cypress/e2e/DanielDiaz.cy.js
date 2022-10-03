@@ -61,9 +61,9 @@ it('Test', () => {
   homepage.clickOnlineShop();  //Go to Online Shop
   // Searching, adding, checking
   productspage.addProductToCart(productsdata.FirstProduct.name);
-  cy.get('#closeModal').click();
+  productspage.CloseModal();
   productspage.addProductToCart(productsdata.SecondProduct.name);
-  cy.get('#closeModal').click();
+  productspage.CloseModal();
   productspage.goShoppingCart();
   shoppingcartpage.CheckProducts(productsdata.FirstProduct.name);
   shoppingcartpage.CheckProducts(productsdata.SecondProduct.name);
@@ -75,7 +75,7 @@ it('Test', () => {
   checkoutpage.typeFirstName(creditcarddata.CreditCard.FirstName);
   checkoutpage.typeLastName(creditcarddata.CreditCard.LastName);
   checkoutpage.typeCardNumber(creditcarddata.CreditCard.CardNumber);
-  cy.contains('Purchase').should('be.exist').click();
+  checkoutpage.goToPurchase();
   //Ticket Verification
   ticketpage.TicketTimeOut();
   ticketpage.CCardVerification1(creditcarddata.CreditCard.FirstName, creditcarddata.CreditCard.LastName);

@@ -10,4 +10,8 @@ export class ProductsPage {
     goShoppingCart(){
         cy.xpath('//button//ancestor::button[@id="goShoppingCart"]').click();
     }
+
+    CloseModal(){
+      cy.get('#closeModal').click();
+    }
     };
