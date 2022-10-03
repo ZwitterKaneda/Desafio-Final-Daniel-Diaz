@@ -69,7 +69,7 @@ it('Test', () => {
   shoppingcartpage.CheckProducts(productsdata.SecondProduct.name);
   shoppingcartpage.CheckPriceProducts(productsdata.FirstProduct.price, productsdata.FirstProduct.name);
   shoppingcartpage.CheckPriceProducts(productsdata.SecondProduct.price, productsdata.SecondProduct.name);
-  shoppingcartpage.CheckFinalPrice(productsdata.FirstProduct.price, productsdata.SecondProduct.price);
+  shoppingcartpage.CheckFinalPrice(productsdata.FirstProduct.price + productsdata.SecondProduct.price);
   //Paying
   checkoutpage.goToCheckOutPage();
   checkoutpage.typeFirstName(creditcarddata.CreditCard.FirstName);
@@ -77,7 +77,7 @@ it('Test', () => {
   checkoutpage.typeCardNumber(creditcarddata.CreditCard.CardNumber);
   checkoutpage.goToPurchase();
   //Ticket Verification
-  ticketpage.TicketTimeOut();
+  ticketpage.waitForLoadingBarToDissapear();
   ticketpage.CCardVerification1(creditcarddata.CreditCard.FirstName, creditcarddata.CreditCard.LastName);
   ticketpage.ProductsVerification(productsdata.FirstProduct.name);
   ticketpage.ProductsVerification(productsdata.SecondProduct.name);

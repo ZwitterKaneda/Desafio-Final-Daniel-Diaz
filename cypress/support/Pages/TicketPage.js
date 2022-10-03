@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 export class TicketPage{
 
-    TicketTimeOut(){
+    waitForLoadingBarToDissapear(){
         cy.get('[class="chakra-progress__indicator css-10wc2yc"]',{timeout: 10000}).should('not.exist');
     }
 

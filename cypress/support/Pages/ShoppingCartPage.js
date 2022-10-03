@@ -9,9 +9,9 @@ export class ShoppingCartPage {
     CheckPriceProducts(price, product) {
         cy.get(`[name='${product}']`).siblings('#productPrice').should('have.text', `$${price}`);
     }
-    CheckFinalPrice(priceOne, priceTwo) {
+    CheckFinalPrice(price) {
         cy.xpath('//button[@class="chakra-button css-15tuzzq"]').should('exist').click();
-        cy.xpath('//*[@id="price"]').should('have.text', `${priceOne + priceTwo}`)
+        cy.xpath('//*[@id="price"]').should('have.text', `${price}`)
 
     }
 }
